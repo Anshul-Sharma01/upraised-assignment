@@ -11,8 +11,12 @@ const Gadget = sequelize.define("Gadget", {
         type : DataTypes.STRING,
         allowNull : false
     },
-    status : {
+    codename : {
         type : DataTypes.STRING,
+        allowNull : false
+    },
+    status : {
+        type : DataTypes.ENUM("Available", "Deployed", "Destroyed", "Decommissioned"),
         allowNull : false,
         defaultValue : "Available"
     },

@@ -6,7 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const generateJwtToken = (user) => {
-    const token = jwt.sign({ id : user.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id : user.id }, process.env.JWT_SECRET, { expiresIn : "7d" });
     return token;
 }
 
@@ -28,7 +28,7 @@ const registerUserController = asyncHandler(async(req, res) => {
         password
     });
 
-    const jwtToken = generateJwtToken();
+    const jwtToken = generateJwtToken(user);
     return res.status(201)
     .cookie("jwtToken", jwtToken, cookieOptions)
     .json(
@@ -49,7 +49,7 @@ const loginUserController = asyncHandler(async(req, res) => {
     if(!user || !(await bcrypt.compare(password, user.password))){
         throw new ApiError(400, "Invalid Credentials");
     }
-    const token = generateJwtToken();
+    const token = generateJwtToken(user);
     return res.status(200)
     .cookie("jwtToken", token, cookieOptions)
     .json(
