@@ -6,7 +6,7 @@ import { ApiError } from "../utils/ApiError.js";
 
 export const verifyJwtMiddleware = asyncHandler(async(req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.cookies?.jwtToken || req.header("Authorization")?.replace("Bearer ", "").trim();
         if(!token){
             throw new ApiError(401, "No token provided"); 
         }
