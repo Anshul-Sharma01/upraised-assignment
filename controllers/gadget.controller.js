@@ -78,7 +78,7 @@ const deleteGadgetController = asyncHandler(async(req, res) => {
     );
 })
 
-const selfDestructGadget = asyncHandler(async(req, res) => {
+const selfDestructGadgetController = asyncHandler(async(req, res) => {
     const { id } = req.params;
     if(!id){
         throw new ApiError(400, "Gadget Id not found");
@@ -104,5 +104,5 @@ export {
     createGadgetController,
     updateGadgetController,
     deleteGadgetController,
-    selfDestructGadget
+    selfDestructGadgetController
 }

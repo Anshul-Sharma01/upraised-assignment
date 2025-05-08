@@ -3,6 +3,8 @@ import { registerUserController, loginUserController } from "../controllers/auth
 
 const router = Router();
 
+// console.log("Routes loaded");
+
 router.route("/register")
 .post(registerUserController);
 
