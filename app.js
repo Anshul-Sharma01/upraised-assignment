@@ -17,7 +17,7 @@ import authRouter from "./routes/auth.routes.js";
 import gadgetRouter from "./routes/gadget.routes.js";
 import { checkServerHealthController } from "./controllers/health.controller.js";
 
-app.use("/", checkServerHealthController);
+app.use("/health", checkServerHealthController);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/gadgets", gadgetRouter);
 
