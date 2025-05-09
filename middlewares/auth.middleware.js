@@ -14,6 +14,9 @@ export const verifyJwtMiddleware = asyncHandler(async(req, res, next) => {
         req.user = decodedToken;
         next();
     } catch (error) {
+        if(error.statusCode === 401){
+            throw new ApiError(401, "Unauthenticated request");
+        }
         throw new ApiError(400, "Error occurred at backend");
     }
 })

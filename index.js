@@ -1,5 +1,16 @@
 import { app } from "./app.js";
 import { sequelize } from "./config/database.js";
+import "./models/user.model.js";
+import "./models/gadget.model.js";
+
+(async () => {
+    try{
+        await sequelize.sync({ alter : true });
+        console.log("All models synced successfully");
+    }catch(err){
+        console.error(`Sync Error : ${err}`);
+    }
+})();
 
 
 const startServer = async () => {

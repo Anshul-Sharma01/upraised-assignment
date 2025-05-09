@@ -29,6 +29,7 @@ const Gadget = sequelize.define("Gadget", {
     timestamps : false
 });
 
+
 export { 
     Gadget
 };

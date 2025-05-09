@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import bcrypt from "bcryptjs";
 
 
 const generateJwtToken = (user) => {
@@ -22,6 +23,12 @@ const registerUserController = asyncHandler(async(req, res) => {
     if(!username || !password){
         throw new ApiError(400, "All Fields are mandatory");
     }
+
+    const userExists = await User.findOne({ where : { username } });
+    if(userExists){
+        throw new ApiError(400, "Username already exists, please choose another username");
+    }
+
 
     const user = await User.create({ 
         username,
@@ -61,8 +68,20 @@ const loginUserController = asyncHandler(async(req, res) => {
     )
 })
 
+const logoutUserController = asyncHandler(async(req, res) => {
+    return res.status(200)
+    .clearCookie("jwtToken", cookieOptions)
+    .json(
+        new ApiResponse(
+            200,
+            {},
+            "User Logged-Out Successfully"
+        )
+    )
+})
 
 export { 
     registerUserController,
-    loginUserController
+    loginUserController,
+    logoutUserController
 }

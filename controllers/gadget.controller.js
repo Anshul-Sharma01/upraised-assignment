@@ -21,9 +21,9 @@ const getAllGadgetsController = asyncHandler(async(req, res) => {
 });
 
 const createGadgetController = asyncHandler(async(req, res) => {
-    const { name } = req.query;
-    const codeName = `The-${Math.random().toString(36).substring(7)}`;
-    const gadget = await Gadget.create({ name, codeName });
+    const { name } = req.body;
+    const codename = `The-${Math.random().toString(36).substring(7)}`;
+    const gadget = await Gadget.create({ name, codename });
     return res.status(201)
     .json(
         new ApiResponse(

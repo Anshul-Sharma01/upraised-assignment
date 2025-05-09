@@ -10,7 +10,9 @@ router.use(verifyJwtMiddleware);
 
 
 router.route("/")
-.get(getAllGadgetsController)
+.get(getAllGadgetsController);
+
+router.route("/create")
 .post(createGadgetController);
 
 router.route("/:id")

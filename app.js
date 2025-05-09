@@ -22,7 +22,7 @@ app.use("/api/v1/gadgets", gadgetRouter);
 
 
 
-app.use("*", (req, res) => {
+app.use("/splat", (req, res) => {
     res.status(404)
     .json({
         success : false,
