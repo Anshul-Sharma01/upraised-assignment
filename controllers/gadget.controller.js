@@ -99,10 +99,45 @@ const selfDestructGadgetController = asyncHandler(async(req, res) => {
     )
 })
 
+// bonus api 
+const getGadgetByStatusController = asyncHandler(async(req, res) => {
+    const { status } = req.query;
+    if(!status){
+        throw new ApiError(400, "Status not provided");
+    }
+    
+    const allowedStatuses = ["Available", "Deployed", "Destroyed", "Decommissioned"];
+
+    if (!allowedStatuses.includes(status)) {
+        throw new ApiError(400, `Invalid status. Allowed values are: ${allowedStatuses.join(", ")}`);
+    }
+    const gadgets = await Gadget.findAll({ where : { status } });
+    if(gadgets.length === 0){
+        return res.status(404)
+        .json(
+            new ApiResponse(
+                404,
+                {},
+                "No gadget found for that particular status"
+            )
+        )
+    }
+    return res.status(200)
+    .json(
+        new ApiResponse(
+            200,
+            gadgets,
+            "Successfully fetched the gadgets for specific status"
+        )
+    )
+})
+
+
 export { 
     getAllGadgetsController,
     createGadgetController,
     updateGadgetController,
     deleteGadgetController,
-    selfDestructGadgetController
+    selfDestructGadgetController,
+    getGadgetByStatusController
 }
