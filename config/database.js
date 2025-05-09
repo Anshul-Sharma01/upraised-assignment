@@ -1,15 +1,17 @@
-
 import { Sequelize } from "sequelize";
-
-const sequelize = new Sequelize({
-    database : "mydb",
-    username : "postgres",
-    password : "anshul@012",
-    host : "localhost",
-    dialect : "postgres",
-})
-    
+import dotenv from "dotenv";
 
 
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+  logging: false
+});
 
-export { sequelize } ;
+export { sequelize };
